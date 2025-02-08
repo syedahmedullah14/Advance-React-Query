@@ -1,6 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
 function Products() {
+
+    const [limit] = useState(4);
+
     const { data: categories } = useQuery({
         queryKey: ['categories'],
         queryFn: async () => {
@@ -13,7 +17,7 @@ function Products() {
     const { data: products } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const data = await fetch('https://dummyjson.com/products').then((res) => res.json());
+            const data = await fetch(`https://dummyjson.com/products?limit=${limit}`).then((res) => res.json());
             return data.products;
         },
     });
